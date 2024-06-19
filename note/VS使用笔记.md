@@ -43,16 +43,15 @@ ClangFormat 执行时有两种设置：
 类似 vsCode 中 Code Spell Checker 插件，检查拼写错误。
 
 # 代码分析
-- VS2022 自带的 Code Analysis
-> [快速入门：C/C++ 代码分析](https://learn.microsoft.com/zh-cn/cpp/code-quality/quick-start-code-analysis-for-c-cpp?view=msvc-170) 
+- [VS2022 自带的 Code Analysis](https://learn.microsoft.com/zh-cn/cpp/code-quality/quick-start-code-analysis-for-c-cpp?view=msvc-170) 
 配置规则集
-- VS2022 集成的 clang-tidy
-> [Clang-Tidy — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/) 
+- [VS2022 集成的 clang-tidy](https://clang.llvm.org/extra/clang-tidy/) 
 写 .clang-tidy 文件，配置规则。如果用 vsCode 写代码，写的规则文件可以在 vsCode 中使用。
 
 ## clang-tidy 进行代码分析
 > [Welcome to Extra Clang Tools's documentation! — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/index.html) 
 > [clang-tidy - Clang-Tidy Checks — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/checks/list.html) 
+
 ### 变量命名规范
 > [在 Visual Studio 中使用 Clang-Tidy](https://learn.microsoft.com/zh-cn/cpp/code-quality/clang-tidy?view=msvc-170#clang-tidy-configuration) 
 
@@ -62,11 +61,23 @@ ClangFormat 执行时有两种设置：
 在项目“属性页”对话框中，打开“配置属性”>“Code Analysis”>“常规”->“启用 Clang-Tidy”选项 选择 “是”。
 
 #### 配置 .clang-tidy
+.clang-tidy 为 yaml 文件，配置的格式见 [Clang-Tidy — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/#using-clang-tidy) 中介绍：
+```yaml
+Configuration files:
+  clang-tidy attempts to read configuration for each source file from a
+  .clang-tidy file located in the closest parent directory of the source
+  file. The .clang-tidy file is specified in YAML format. If any configuration
+  options have a corresponding command-line option, command-line option takes
+  precedence.
+```
+
+可以用 `clang-tidy --dump-config` 查看格式。
+
 根据 [clang-tidy - readability-identifier-naming — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/checks/readability/identifier-naming.html) 设置变量命名规范，写到 .clang-tidy 文件中，可以将文件放在项目的根目录。
 
 例如：
 ```yaml
-Checks: >
+Checks:
   - readability-identifier-naming
 WarningsAsErrors: '*'
 HeaderFilterRegex: '.*'
@@ -95,9 +106,7 @@ CheckOptions:
   - key: readability-identifier-naming.EnumConstantCase
     value: UPPER_CASE
 ```
-`>`符号被用来引入“折叠”模式（Folded Style），允许多行字符串在YAML中被表示为单行。使用`>`后，字符串中的换行会被转换为空格，除非有一个空行表示新的段落。
-
-- `Checks: > - readability-identifier-naming`：指定应该执行的检查列表，这里只启用了`readability-identifier-naming`检查，用于标识符的命名规范。
+- `Checks:`：指定应该执行的检查列表，这里只启用了`readability-identifier-naming`检查，用于标识符的命名规范。
 - `WarningsAsErrors: '*'`：将所有警告视为错误，意味着任何满足警告条件的代码都会导致构建失败。
 - `HeaderFilterRegex: '.*'`：指定一个正则表达式，用于过滤哪些头文件应该被这个`.clang-tidy`配置检查。这里的`'.*'`意味着对所有文件进行检查。
 - `AnalyzeTemporaryDtors: true`：启用对临时对象析构函数的分析。
@@ -119,13 +128,7 @@ Checks: >
   clang-analyzer-*,
   -clang-analyzer-cplusplus*
 ```
-这里的`-`符号位于每个检查器名称前，但这实际上是YAML语法的一部分，用于表示列表项而不是禁用检查器的标志。在YAML中，列表可以用`- `（横杠加一个空格）来表示每个元素。因此，在这个上下文中，`-`不是禁用检查器的表示，而是声明一个项列表。
-
-这里首先出现的`-*`，意味着**禁用所有检查器**。其后的`clang-analyzer-*`表示启用以`clang-analyzer-`开头的所有检查器。接着，`-clang-analyzer-cplusplus*`则表示**禁用**所有以`clang-analyzer-cplusplus`开头的检查器。这个场景中的`-`符号用于`-*`和`-clang-analyzer-cplusplus*`是表示禁用的意思，而不是YAML中的列表标记。
-
-当使用`>`符号进入折叠模式后，后续的文本被认为是单一字符串的一部分，而不是一个列表项。这与普通的YAML列表（通过在每一项前添加`-`符号标识）不同。
-在这种模式下，字符串内可以包含逗号`,`来分隔不同的检查器配置项。因此，它被视为一个长字符串而非多个列表项。
-因此，在使用`>`后，我们直接将检查器的命令作为一长串文本输入，不需逐项添加`-`符号，因为此时的上下文不是声明一个YAML列表，而是将多行文本折叠成单行字符串。
+这里首先出现的`-*`，意味着**禁用所有检查器**。其后的`clang-analyzer-*`表示启用以`clang-analyzer-`开头的所有检查器。接着，`-clang-analyzer-cplusplus*`则表示**禁用**所有以`clang-analyzer-cplusplus`开头的检查器。
 
 ### 代码可读性检查
 #### magic-number 检查
@@ -235,7 +238,7 @@ Checks: >
 # 示例
 ## .clang-tidy
 ```yaml
-Checks: >
+Checks:
   - readability-identifier-naming
   - cppcoreguidelines-init-variables
   - readability-function-cognitive-complexity
