@@ -232,6 +232,12 @@ Checks: >
   bugprone-narrowing-conversions  
 ```  
   
+## C++ Core Guidelines 建议
+- cppcoreguidelines-* 系列检查器基于 [GitHub - isocpp/CppCoreGuidelines: The C++ Core Guidelines are a set of tried-and-true guidelines, rules, and best practices about coding in C++](https://github.com/isocpp/CppCoreGuidelines)  进行 c++ 代码的检查。
+
+如果全部启用，可能不适合用于 CI/CD 的流程的中，最好根据实际需求启用。
+但个人写代码时可以启用，查看优化建议，提升代码质量。
+
 ## 排除某些文件  
 > [Clang-Tidy — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/#using-clang-tidy)   
   
@@ -300,6 +306,7 @@ Visual Studio 2022中的Build Insights工具是一个功能强大的性能分析
 # 示例  
 ## .clang-tidy  
 ```yaml  
+---
 Checks:  
   - readability-identifier-naming  
   - cppcoreguidelines-init-variables  
@@ -353,64 +360,70 @@ CheckOptions:
     value: 4  
   - key: readability-function-size.ParameterThreshold  
     value: 6  
+
+...
+
 ```  
   
 ## .clang-tidy  
 ```yaml  
-Checks: >  
-  *,  
-  -*,  
-  readability-identifier-naming,  
-  cppcoreguidelines-init-variables,  
-  readability-function-cognitive-complexity,  
-  readability-function-size,  
-  readability-magic-numbers,  
-  clang-analyzer-core.NullDereference,  
-  clang-analyzer-cplusplus.NewDelete,  
-  clang-analyzer-cplusplus.NewDeleteLeaks,  
-  performance-*,  
-  modernize-use-auto,  
-  modernize-make-smart-pointers,  
-  bugprone-incorrect-roundings,  
-  bugprone-integer-division,  
-  bugprone-use-after-move,  
-  bugprone-bad-signal-to-kill-thread,  
-  bugprone-narrowing-conversions  
-CheckOptions:  
-  - key: readability-identifier-naming.ClassCase  
-    value: CamelCase  
-  - key: readability-identifier-naming.StructCase  
-    value: CamelCase  
-  - key: readability-identifier-naming.EnumCase  
-    value: CamelCase  
-  - key: readability-identifier-naming.FunctionCase  
-    value: CamelCase  
-  - key: readability-identifier-naming.VariableCase  
-    value: camelBack  
-  - key: readability-identifier-naming.GlobalVariablePrefix  
-    value: 'g_'  
-  - key: readability-identifier-naming.GlobalVariableCase  
-    value: 'camelBack'  
-  - key: readability-identifier-naming.MemberPrefix  
-    value: 'm_'  
-  - key: readability-identifier-naming.MemberCase  
-    value: camelBack  
-  - key: readability-identifier-naming.ConstantCase  
-    value: UPPER_CASE  
-  - key: readability-identifier-naming.EnumConstantCase  
-    value: UPPER_CASE  
-  - key: readability-function-cognitive-complexity.Threshold  
-    value: 20   
-  - key: readability-function-cognitive-complexity.DescribeBasicIncrements  
-    value: true  
-  - key: readability-function-cognitive-complexity.IgnoreMacros  
-    value: false  
-  - key: readability-function-size.LineThreshold  
-    value: 50  
-  - key: readability-function-size.NestingThreshold  
-    value: 4  
-  - key: readability-function-size.ParameterThreshold  
-    value: 6  
+---
+Checks: >
+  -*,
+  readability-identifier-naming,
+  cppcoreguidelines-init-variables,
+  readability-function-cognitive-complexity,
+  readability-function-size,
+  readability-magic-numbers,
+  clang-analyzer-core.NullDereference,
+  clang-analyzer-cplusplus.NewDelete,
+  clang-analyzer-cplusplus.NewDeleteLeaks,
+  performance-*,
+  modernize-use-auto,
+  modernize-make-smart-pointers,
+  bugprone-incorrect-roundings,
+  bugprone-integer-division,
+  bugprone-use-after-move,
+  bugprone-bad-signal-to-kill-thread,
+  bugprone-narrowing-conversions
+CheckOptions:
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.FunctionCase
+    value: CamelCase
+  - key: readability-identifier-naming.VariableCase
+    value: camelBack
+  - key: readability-identifier-naming.GlobalVariablePrefix
+    value: 'g_'
+  - key: readability-identifier-naming.GlobalVariableCase
+    value: 'camelBack'
+  - key: readability-identifier-naming.MemberPrefix
+    value: 'm_'
+  - key: readability-identifier-naming.MemberCase
+    value: camelBack
+  - key: readability-identifier-naming.ConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+  - key: readability-function-cognitive-complexity.Threshold
+    value: 20 
+  - key: readability-function-cognitive-complexity.DescribeBasicIncrements
+    value: true
+  - key: readability-function-cognitive-complexity.IgnoreMacros
+    value: false
+  - key: readability-function-size.LineThreshold
+    value: 50
+  - key: readability-function-size.NestingThreshold
+    value: 4
+  - key: readability-function-size.ParameterThreshold
+    value: 6
+  
+...
+
 ```  
   
 ## .clang-format  
