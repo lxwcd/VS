@@ -166,6 +166,14 @@ readability-function-size.NestingThreshold
 readability-function-size.ParameterThreshold  
   
 ### 代码安全性检查  
+在配置`clang-tidy`的`readability-function-cognitive-complexity`时，可以通过修改`.clang-tidy`配置文件来设定以下三个参数来调整复杂度检查的行为：
+
+1. **Threshold**：标记认知复杂度超过此数值的函数。默认值是25。当一个函数的认知复杂度超过这个阈值时，它会被`clang-tidy`标记。
+
+2. **DescribeBasicIncrements**：如果设置为true，那么对于每个超过复杂度阈值的函数，检查将在每个导致复杂度增加的代码片段（循环、if语句等）上发出额外的诊断信息。默认值是true。
+
+3. **IgnoreMacros**：如果设置为true，检查将忽略宏内的代码。注意，任何宏参数也会被忽略，即使它们应该计入复杂度。由于将来这可能会改变，此选项不保证向前兼容。默认值是false。
+
 - clang-analyzer-*  
   
 #### 变量初始化检查  
