@@ -4,11 +4,12 @@ VS2022 使用笔记
 - clang-format 格式化  
 VS2022 内部集成 clang-format 工具，可以开启使用。且用 clang-format 也可配置 .clang-format 文件后在 vsCode 中使用相同的格式化配置。  
 - [C++ EditorConfig 格式设置约定](https://learn.microsoft.com/zh-cn/visualstudio/ide/cpp-editorconfig-properties?view=vs-2019)  
-在 UI 界面设置格式，然后将设置导出。  
+VS2022 的配置，在 UI 界面设置格式，然后将设置导出。  
+[代码样式选项和代码清理 - Visual Studio (Windows)](https://learn.microsoft.com/zh-cn/visualstudio/ide/code-styles-and-code-cleanup?view=vs-2022)
   
 ## clang-format 格式化代码  
 > [选项，文本编辑器，C/C++，格式设置 - Visual Studio (Windows)](https://learn.microsoft.com/zh-cn/visualstudio/ide/reference/options-text-editor-c-cpp-formatting?view=vs-2022#configuring-clangformat-options)   
-> [Visual Studio和VS Code使用clang-format自定义C++代码默认格式化样式_vs clang-format-CSDN博客](https://blog.csdn.net/xy1157/article/details/93224422)   
+> [ClangFormat — Clang 19.0.0git documentation](https://clang.llvm.org/docs/ClangFormat.html) 
   
 VS2022 内部集成 clang-format 工具，可以开启使用。  
   
@@ -22,6 +23,9 @@ ClangFormat 执行时有两种设置：
 两种方案都不会自动对未修改的代码进行格式化。  
   
 ### 配置 .clang-format 文件  
+> [ClangFormat — Clang 19.0.0git documentation](https://clang.llvm.org/docs/ClangFormat.html) 
+> [Clang-Format Style Options — Clang 19.0.0git documentation](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#) 
+
 - 可以通过 [clang-format configurator](https://zed0.co.uk/clang-format-configurator/) 在线编辑和查看样式，最后生成 .clang-format 文件。  
 - 可以自己编写 .clang-format 文件，参考 [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)。  
 - .clang-format 文件放在项目根目录下。  
@@ -136,6 +140,17 @@ Checks: >
   
 - readability-magic-numbers  
   
+### 头文件检查
+
+#### include 清理
+- 单独对一个文件进行代码分析，可能不能检查哪些头文件是无用的头文件？
+- vs2022 中有该功能，可以用 vs2022 原生配置进行检查。
+
+#### 检查弃用的头文件
+> [clang-tidy - modernize-deprecated-headers — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/checks/modernize/deprecated-headers.html) 
+
+- modernize-deprecated-headers 检查器
+
 ### 代码复杂度检查  
 > [clang-tidy - readability-function-cognitive-complexity — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/checks/readability/function-cognitive-complexity.html)   
 > [clang-tidy - readability-function-size — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/checks/readability/function-size.html)  
@@ -234,7 +249,46 @@ Checks: >
                                      code with clang-apply-replacements.  
 ```  
 不是在 .clang-tidy 中设置，而是 clang-tidy 运行时指定的参数，可以在命令行运行 clang-tidy 时指定。  
+
+## VS 自带代码分析
+
+### 头文件检查
+#### 头文件清理
+> [清理 Visual Studio 中的 C/C++ #include](https://learn.microsoft.com/zh-cn/cpp/ide/include-cleanup-overview?view=msvc-170) 
+> [在 Visual Studio 中配置 C/C++ Include 清理](https://learn.microsoft.com/zh-cn/cpp/ide/include-cleanup-config?view=msvc-170) 
+
+- 配置后无用的头文件会有提示
+
+### intellisense
+> [探索用于 C++ 项目编码的 IntelliSense 功能 - Visual Studio (Windows)](https://learn.microsoft.com/zh-cn/visualstudio/ide/visual-cpp-intellisense?view=vs-2022) 
   
+
+### 代码清理
+> [代码样式选项和代码清理 - Visual Studio (Windows)](https://learn.microsoft.com/zh-cn/visualstudio/ide/code-styles-and-code-cleanup?view=vs-2022) 
+
+
+### build insights 性能分析
+> [Build Insights Now Available in Visual Studio 2022 - C++ Team Blog](https://devblogs.microsoft.com/cppblog/build-insights-now-available-in-visual-studio-2022/) 
+
+Visual Studio 2022中的Build Insights工具是一个功能强大的性能分析工具，旨在帮助开发者理解和优化他们的编译时长。这个工具通过分析项目构建过程中的数据，提供深入的洞察力，帮助开发人员识别和解决可能影响构建性能的问题。以下是Build Insights提供的一些关键特性：
+
+1. **详细的时间线视图**：Build Insights提供了一个详细的时间线视图，展示了整个构建过程中各个任务和事件的运行情况。这使得开发者能够精准地看到构建过程中每个阶段的耗时，便于识别瓶颈。
+
+2. **并行度分析**：Visual Studio的Build Insights工具可以帮助开发者理解他们的项目构建是如何利用可用的CPU资源的。它可以识别出在构建过程中可能存在的并行化问题，比如无法充分利用所有CPU核心的情况。
+
+3. **依赖关系图**：通过展示项目文件和任务间的依赖关系，Build Insights帮助开发者理解构建顺序并识别可能的改进点。这对于优化构建流程、减少不必要的构建步骤特别有帮助。
+
+4. **性能警告和建议**：Build Insights能够自动检测到潜在的性能问题，并提供实用的优化建议。这些建议可以帮助开发者调整构建配置，以达到更好的构建性能。
+
+通过利用Build Insights，开发者可以显著提升他们的构建效率，减少开发周期中的等待时间，从而加快整体的开发流程。Visual Studio 2022通过这种方式为开发者提供了一个更加高效、更加智能的开发环境。
+
+# 配置版本控制
+
+## SVN 
+- 安装 VisualSVN for Visual Studio 2022 插件
+
+## Git
+
 # 示例  
 ## .clang-tidy  
 ```yaml  
@@ -353,8 +407,8 @@ CheckOptions:
   
 ## .clang-format  
 ```yaml  
+--- 
 # 通用规则（适用于C/C++）  
-# BasedOnStyle:    Google  
 BasedOnStyle: Google  
 # 空格代替 tab  
 UseTab:          Never  
@@ -365,7 +419,7 @@ ColumnLimit:     120
 # 花括号包裹方式  
 BreakBeforeBraces: Allman  
 # 指针和引用的位置  
-DerivePointerAlignment: false  
+DerivePointerAlignment: false
 PointerAlignment: Right  # 或者 Left, Middle  
 # 控制是否对齐连续的赋值语句。  
 AlignConsecutiveAssignments: true  
@@ -376,26 +430,16 @@ AllowShortFunctionsOnASingleLine: All  # 或者 None, InlineOnly, Empty
 # 控制尾随注释前的空格数。  
 SpacesBeforeTrailingComments: 2  
 # 控制关键字和左括号之间的空格。  
-SpaceBeforeParens: ControlStatements # Never, Always  
+SpaceBeforeParens: ControlStatements # Never, Always
 # 控制 `case` 标签的缩进。  
 IndentCaseLabels: true  
-  
+
 ---  
-  
+
 Language:        Cpp  
 # C++的独特规则  
-Standard:        Cpp11  
-  
-# 控制语句之后总是换行  
-AfterControlStatement: Always   
-# 函数定义后换行  
-AfterFunction: true   
-# 命名空间定义后换行  
-AfterNamespace: true   
-# 结构体定义后换行  
-AfterStruct: true   
-# 类定义后换行  
-AfterClass: true   
-# 联合体定义后换行  
-AfterUnion: true   
+Standard:        C++11  
+
+...
+
 ```  
