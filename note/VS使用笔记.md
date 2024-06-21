@@ -1,4 +1,6 @@
 VS2022 使用笔记  
+
+- vs2022 17.9.5
   
 # 代码格式化  
 - clang-format 格式化  
@@ -14,7 +16,8 @@ VS2022 的配置，在 UI 界面设置格式，然后将设置导出。
 VS2022 内部集成 clang-format 工具，可以开启使用。  
   
 ### VS2022 启用 clang-format  
-![](img/2024-06-18-13-56-48.png)  
+工具 -> 选项 -> 文本编辑器 -> C/C++ -> 代码样式 -> 格式设置 -> 常规 勾选下面选项：
+![](img/2024-06-21-14-30-47.png)
   
 ClangFormat 执行时有两种设置：  
 1. **针对所有格式方案运行ClangFormat**：编写代码时自动格式化。  
@@ -55,16 +58,13 @@ ClangFormat 执行时有两种设置：
 ## clang-tidy 进行代码分析  
 > [Welcome to Extra Clang Tools's documentation! — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/index.html)   
 > [clang-tidy - Clang-Tidy Checks — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/checks/list.html)   
-  
-### 变量命名规范  
 > [在 Visual Studio 中使用 Clang-Tidy](https://learn.microsoft.com/zh-cn/cpp/code-quality/clang-tidy?view=msvc-170#clang-tidy-configuration)   
   
-- VS2022 默认集成了 clang-tidy 工具，可以开启使用。  
+- 启用 clang-tidy  
+项目 -> 属性 -> Code Analysis -> 常规 -> 启用 Clang-Tidy
+![](img/2024-06-21-14-41-59.png)
   
-#### 启用 clang-tidy  
-在项目“属性页”对话框中，打开“配置属性”>“Code Analysis”>“常规”->“启用 Clang-Tidy”选项 选择 “是”。  
-  
-#### 配置 .clang-tidy  
+- 配置 .clang-tidy  
 .clang-tidy 为 yaml 文件，配置的格式见 [Clang-Tidy — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/#using-clang-tidy) 中介绍：  
 ```yaml  
 Configuration files:  
@@ -77,6 +77,7 @@ Configuration files:
   
 可以用 `clang-tidy --dump-config` 查看格式。  
   
+### 变量命名规范  
 根据 [clang-tidy - readability-identifier-naming — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/checks/readability/identifier-naming.html) 设置变量命名规范，写到 .clang-tidy 文件中，可以将文件放在项目的根目录。  
   
 例如：  
@@ -97,6 +98,10 @@ CheckOptions:
     value: CamelCase  
   - key: readability-identifier-naming.VariableCase  
     value: camelBack  
+  - key: readability-identifier-naming.StaticVariablePrefix  
+    value: 'l_'  
+  - key: readability-identifier-naming.StaticVariableCase  
+    value: 'camelBack'  
   - key: readability-identifier-naming.GlobalVariablePrefix  
     value: 'g_'  
   - key: readability-identifier-naming.GlobalVariableCase  
@@ -134,6 +139,9 @@ Checks: >
 ```  
 这里首先出现的`-*`，意味着**禁用所有检查器**。其后的`clang-analyzer-*`表示启用以`clang-analyzer-`开头的所有检查器。接着，`-clang-analyzer-cplusplus*`则表示**禁用**所有以`clang-analyzer-cplusplus`开头的检查器。  
   
+注意这里同时设置了全局变量和静态变量的规则，测试结果发现全局的静态变量按照全局变量的规则检查，即使将全局变量的配置注释，也不会按照静态变量的规则检查。
+如果为显示设置全局变量的格式，则默认按照普通变量的格式检查。
+
 ### 代码可读性检查  
 #### magic-number 检查  
 > [clang-tidy - readability-magic-numbers — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/checks/readability/magic-numbers.html#readability-magic-numbers)   
