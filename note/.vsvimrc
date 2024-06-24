@@ -1,0 +1,157 @@
+" .vsvimrc: VsVim 2022 
+" :set 查看 .vsvimrc 路径 vimrcpaths 值，或者 :set vimrcpaths?
+let $MYVIMRC = "C:/Users/lx/.vsvimrc"
+let mapleader = "\<Space>"
+
+" =============== :vsc command mapping =========================
+" copy to clipboard
+vnoremap <Leader>y :vsc Edit.Copy<CR>
+" cut
+vnoremap <Leader>x :vsc Edit.Cut<CR>
+" *********** find ***********
+nnoremap <Leader>ff :vsc Edit.Find<CR>
+nnoremap <Leader>fF :vsc Edit.FindinFiles<CR>
+nnoremap <Leader>fr :vsc Edit.FindAllReferences<CR>
+nnoremap <Leader>ft :vsc Edit.GoToAll<CR>
+" parameter info
+nnoremap <Leader>fp :vsc Edit.ParameterInfo<CR>
+inoremap <C-P>i :vsc Edit.ParameterInfo<CR>
+
+" ************ show ****************
+nnoremap <Leader>sn :vsc Edit.ShowNavigateMenu<CR>
+" definiton
+nnoremap <Leader>sd :vsc Edit.PeekDefinition<CR>
+nnoremap <Leader>sm :vsc Edit.ListMembers<CR>
+nnoremap <C-J> :vsc Edit.ListMembers<CR>
+
+" **************** jump ****************
+nnoremap <F12> :vsc Edit.GoToDefinition<CR>
+nnoremap <C-F12> :vsc Edit.GoToDeclaration<CR>
+
+" ************** comment ****************
+nnoremap <C-/> :vsc Edit.CommentSelection<CR>
+vnoremap <C-/> :vsc Edit.CommentSelection<CR>
+nnoremap <C-S-/> :vsc Edit.UncommentSelection<CR>
+vnoremap <C-S-/> :vsc Edit.UncommentSelection<CR>
+
+" ************** format ****************
+nnoremap <C-K><C-D> :vsc Edit.FormatDocument<CR>
+vnoremap <C-K><C-D> :vsc Edit.FormatDocument<CR>
+nnoremap <C-K><C-F> :vsc Edit.FormatSelection<CR>
+vnoremap <C-K><C-F> :vsc Edit.FormatSelection<CR>
+
+" ************** file ****************
+nnoremap <C-N> :vsc File.NewFile<CR>
+vnoremap <C-N> :vsc File.NewFile<CR>
+inoremap <C-N> :vsc File.NewFile<CR>
+nnoremap <Leader>bN :vsc File.NewFile<CR>
+
+nnoremap <C-S-N> :vsc File.NewProject<CR>
+vnoremap <C-S-N> :vsc File.NewProject<CR>
+inoremap <C-S-N> :vsc File.NewProject<CR>
+nnoremap <Leader>bP :vsc File.NewProject<CR>
+
+nnoremap <Leader>of :vsc File.OpenFile<CR>
+nnoremap <Leader>op :vsc File.OpenProject<CR>
+nnoremap <Leader>ow :vsc File.OpenWebSite<CR>
+
+" ************** project ****************
+nnoremap <Leader>pe :vsc Project.AddExistingItem<CR>
+nnoremap <Leader>pn :vsc Project.AddNewItem<CR>
+
+" =============== 设置快捷键 =========================
+" 历史记录的数目
+set history=50
+" 设置行号
+set number
+" 设置相对行号
+set relativenumber
+" 显示当前执行的命令
+set showcmd
+" 开启查询时高亮
+set incsearch
+" 查询时忽略大小写
+set ignorecase
+" 文字超过长度换行
+set wrap
+" 空格代替制表符
+set expandtab
+" 设置tab宽度
+set tabstop=4
+" 设置缩进的宽度
+set shiftwidth=4
+" 编辑时一个Tab显示为4个空格
+set softtabstop=4   
+" 显示光标所在行
+set cursorline
+" 自动缩进
+set autoindent
+" 显示 Tab 和行结束符$
+" set list
+" 搜索高亮
+set hlsearch
+" 一边搜索一边高亮
+set incsearch
+" 设置状态条
+" set statusline=%.20F\ -\ FileType:\ %y
+" set statusline+=\ \ [%-4l]/[%-4L]
+
+" 垂直分屏中打开自定义 vimrc 文件
+" nnoremap <Leader>ev :vsplit $MYVIMRC<CR>
+" 重读自定义配置文件，使之立即生效
+nnoremap <Leader>sv :source $MYVIMRC<CR>
+
+" 保存文件
+nnoremap <Leader>w :write!<CR>
+nnoremap <Leader>wa :wa!<CR>
+nnoremap <Leader>q :q!<CR>
+nnoremap <Leader>qa :qa!<CR>
+nnoremap <Leader>wq :wq!<CR>
+nnoremap <Leader>wqa :wqa!<CR>
+
+" 窗口操作
+nnoremap <Leader>wh <C-W>h
+nnoremap <Leader>wj <C-W>j
+nnoremap <Leader>wk <C-W>k
+nnoremap <Leader>wl <C-W>l
+nnoremap <Leader>ww <C-W>w
+
+nnoremap <Leader>wc <C-W>c
+
+" 新建窗口
+nnoremap <Leader>ws <C-W>s <C-W>j
+nnoremap <Leader>wv <C-W>v <C-W>l
+
+" 搜索高亮控制
+nnoremap <Leader>hs :set hlsearch<Esc>
+nnoremap <Leader>nh :set nohlsearch<Esc>
+
+nnoremap <Leader>is :set incsearch<Esc>
+nnoremap <Leader>nis :set noincsearch<Esc>
+
+" 不显示行号
+nnoremap <Leader>cp :set nonumber norelativenumber<Esc>
+" 显示行号
+nnoremap <Leader>sn :set number relativenumber<Esc>
+
+" 为单词加上双引号
+nnoremap <Leader>" viw<Esc>a"<Esc>xhbi"<Esc>xlel
+" 为单词加上单引号
+nnoremap <Leader>' viw<Esc>a'<Esc>xhbi'<Esc>xlel
+" 为单词加上反单引号
+nnoremap <Leader>` viw<Esc>a`<Esc>hbi`<Esc>lel
+" 为单词加上圆括号
+nnoremap <Leader>( viw<Esc>a)<Esc>hbi(<Esc>lel
+" 为单词加上方括号
+nnoremap <Leader>[ viw<Esc>a]<Esc>hbi[<Esc>lel
+" 为单词加上花括号
+nnoremap <Leader>{ viw<Esc>a}<Esc>hbi{<Esc>lel
+" 为单词加上尖括号
+nnoremap <Leader>< viw<Esc>a><Esc>hbi<<Esc>lel
+
+" 插入模式切换为普通模式
+inoremap jk <Esc>
+
+" 缩写
+iabbrev @@ 15521168075@163.com
+iabbrev #! #!/bin/bash

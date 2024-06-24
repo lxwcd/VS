@@ -378,13 +378,13 @@ Checks:
   - clang-analyzer-core.NullDereference  
   - clang-analyzer-cplusplus.NewDelete  
   - clang-analyzer-cplusplus.NewDeleteLeaks  
-  - performance-*  
+  # - performance-*  
   - modernize-use-auto  
   - modernize-make-smart-pointers  
   - bugprone-incorrect-roundings  
   - bugprone-integer-division  
   - bugprone-use-after-move  
-  - bugprone-bad-signal-to-kill-thread  
+  # - bugprone-bad-signal-to-kill-thread  
   - bugprone-narrowing-conversions  
 CheckOptions:  
   - key: readability-identifier-naming.ClassCase  
@@ -397,6 +397,10 @@ CheckOptions:
     value: CamelCase  
   - key: readability-identifier-naming.VariableCase  
     value: camelBack  
+  - key: readability-identifier-naming.StaticVariablePrefix  
+    value: 'l_'  
+  - key: readability-identifier-naming.StaticVariableCase  
+    value: 'camelBack'  
   - key: readability-identifier-naming.GlobalVariablePrefix  
     value: 'g_'  
   - key: readability-identifier-naming.GlobalVariableCase  
@@ -439,13 +443,13 @@ Checks: >
   clang-analyzer-core.NullDereference,
   clang-analyzer-cplusplus.NewDelete,
   clang-analyzer-cplusplus.NewDeleteLeaks,
-  performance-*,
+  # performance-*,
   modernize-use-auto,
   modernize-make-smart-pointers,
   bugprone-incorrect-roundings,
   bugprone-integer-division,
   bugprone-use-after-move,
-  bugprone-bad-signal-to-kill-thread,
+  # bugprone-bad-signal-to-kill-thread,
   bugprone-narrowing-conversions
 CheckOptions:
   - key: readability-identifier-naming.ClassCase
@@ -458,6 +462,10 @@ CheckOptions:
     value: CamelCase
   - key: readability-identifier-naming.VariableCase
     value: camelBack
+  - key: readability-identifier-naming.StaticVariablePrefix  
+    value: 'l_'  
+  - key: readability-identifier-naming.StaticVariableCase  
+    value: 'camelBack'  
   - key: readability-identifier-naming.GlobalVariablePrefix
     value: 'g_'
   - key: readability-identifier-naming.GlobalVariableCase
