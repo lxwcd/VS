@@ -1,6 +1,52 @@
 VS2022 使用笔记  
 
-- vs2022 17.9.5
+# 环境
+- win10 vs2022 专业版 17.9.5
+- win11 vs2022 社区版 17.10.2
+
+# 配置 vim 编辑模式
+## 安装 vsVim 2022 插件
+- 扩展 -> 管理扩展 -> 搜索 vsVim 2022
+
+## 处理 vsVim 与 vs2022 冲突的快捷键
+- 工具 -> 选项 -> VsVim -> Keyboard 
+![](img/2024-06-23-17-16-41.png)
+
+## vs2022 默认快捷键
+> [Keyboard shortcuts - Visual Studio (Windows)](https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=vs-2022#bkmk_edit-popular-shortcuts) 
+> [vs2022 默认键盘快捷键](https://visualstudio.microsoft.com/keyboard-shortcuts.pdf) 
+
+- 官网查看
+- vs2022 中查看
+工具 -> 选项 -> 环境 -> 键盘
+![](img/2024-06-23-22-34-02.png)
+![](img/2024-06-23-22-34-59.png)
+
+## VsVim 配置
+> [VsVim 配置](https://www.jianshu.com/p/805f598ddaf0) 
+
+- 工具 -> 选项 -> VsVim -> Defaults 
+![](img/2024-06-23-17-21-10.png)
+Output Window 选择 True，显示 vim 命令输出窗口。
+
+### 添加 VsVim 配置文件
+- 通过 `:set` 在输出窗口查看配置文件路径。  
+![](img/2024-06-23-17-27-33.png)
+
+- 输入 `:help` 打开[vsVim github 网址](https://github.com/VsVim/VsVim/wiki) ，查看介绍，在[Settings Reference](https://github.com/VsVim/VsVim/wiki/Settings-Reference) 中查看配置文件的文件名。
+![](img/2024-06-23-17-44-25.png)
+
+### 配置 .vsvimrc 文件
+> [VsVim 配置文件官方介绍](https://github.com/VsVim/VsVim/wiki/Settings-Reference#settings)  
+
+#### VsVim 配置 VS 中内置功能
+> [Commands - Visual Studio (Windows)](https://learn.microsoft.com/en-us/visualstudio/ide/reference/visual-studio-commands?view=vs-2022) 
+> [Keyboard shortcuts - Visual Studio (Windows)](https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=vs-2022) 
+> [vs2022 默认键盘快捷键](https://visualstudio.microsoft.com/keyboard-shortcuts.pdf) 
+
+##### Edit 命令
+> [Keyboard shortcuts - Visual Studio (Windows)](https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=vs-2022#bkmk_edit-popular-shortcuts) 
+
   
 # 代码格式化  
 - clang-format 格式化  
@@ -13,10 +59,10 @@ VS2022 的配置，在 UI 界面设置格式，然后将设置导出。
 > [选项，文本编辑器，C/C++，格式设置 - Visual Studio (Windows)](https://learn.microsoft.com/zh-cn/visualstudio/ide/reference/options-text-editor-c-cpp-formatting?view=vs-2022#configuring-clangformat-options)   
 > [ClangFormat — Clang 19.0.0git documentation](https://clang.llvm.org/docs/ClangFormat.html) 
   
-VS2022 内部集成 clang-format 工具，可以开启使用。  
+- VS2022 内部集成 clang-format 工具，可以开启使用。  
   
 ### VS2022 启用 clang-format  
-工具 -> 选项 -> 文本编辑器 -> C/C++ -> 代码样式 -> 格式设置 -> 常规 勾选下面选项：
+- 工具 -> 选项 -> 文本编辑器 -> C/C++ -> 代码样式 -> 格式设置 -> 常规 -> 启用 clang-format 支持
 ![](img/2024-06-21-14-30-47.png)
   
 ClangFormat 执行时有两种设置：  
@@ -32,8 +78,11 @@ ClangFormat 执行时有两种设置：
 - 可以通过 [clang-format configurator](https://zed0.co.uk/clang-format-configurator/) 在线编辑和查看样式，最后生成 .clang-format 文件。  
 - 可以自己编写 .clang-format 文件，参考 [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)。  
 - .clang-format 文件放在项目根目录下。  
+如果项目文件夹中存在此类文件，Visual Studio 将使用它来设置该文件夹及其子文件夹中所有源代码文件的格式。
   
 ### 配置 .clang-format-ignore 文件  
+> [ClangFormat — Clang 19.0.0git documentation](https://clang.llvm.org/docs/ClangFormat.html#clang-format-ignore) 
+
 - 类似 .gitignore 文件，用于忽略某些文件。  
 - 将该文件放在项目的根目录中，将需要忽略的文件相对于根目录的相对路径写到 .clang-format-ignore 中。  
 注意路径分隔符，如果在 windows 中，用 windows 分隔符 `\`。  
@@ -240,13 +289,13 @@ Checks: >
   bugprone-narrowing-conversions  
 ```  
   
-## C++ Core Guidelines 建议
+### C++ Core Guidelines 建议
 - cppcoreguidelines-* 系列检查器基于 [GitHub - isocpp/CppCoreGuidelines: The C++ Core Guidelines are a set of tried-and-true guidelines, rules, and best practices about coding in C++](https://github.com/isocpp/CppCoreGuidelines)  进行 c++ 代码的检查。
 
 如果全部启用，可能不适合用于 CI/CD 的流程的中，最好根据实际需求启用。
 但个人写代码时可以启用，查看优化建议，提升代码质量。
 
-## 排除某些文件  
+### 排除某些文件  
 > [Clang-Tidy — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/#using-clang-tidy)   
   
 ```  
@@ -262,7 +311,7 @@ Checks: >
   
 不是在 .clang-tidy 中设置，而是 clang-tidy 运行时指定的参数，可以在命令行运行 clang-tidy 时指定。  
   
-## 导出检查的建议  
+### 导出检查的建议  
 > [Clang-Tidy — Extra Clang Tools 19.0.0git documentation](https://clang.llvm.org/extra/clang-tidy/#exporting-checker-suggestions)  
   
 ```  
@@ -276,10 +325,14 @@ Checks: >
 
 ### 头文件检查
 #### 头文件清理
-> [清理 Visual Studio 中的 C/C++ #include](https://learn.microsoft.com/zh-cn/cpp/ide/include-cleanup-overview?view=msvc-170) 
 > [在 Visual Studio 中配置 C/C++ Include 清理](https://learn.microsoft.com/zh-cn/cpp/ide/include-cleanup-config?view=msvc-170) 
+> [清理 Visual Studio 中的 C/C++ #include](https://learn.microsoft.com/zh-cn/cpp/ide/include-cleanup-overview?view=msvc-170) 
 
-- 配置后无用的头文件会有提示
+- 从 17.8 预览版 1 开始，Visual Studio 可以通过以下方式清理 #include 
+vs2022 17.10.2 社区版和 vs2022 17.9.5 专业版都测试过
+- 配置后无用的头文件会有提示，或者变暗（根据自己选择的配置）
+- 工具 -> 选项 -> 文本编辑器 -> C/C++ -> 代码清理 -> 启用 #include 清理
+![](img/2024-06-23-11-39-36.png)
 
 ### intellisense
 > [探索用于 C++ 项目编码的 IntelliSense 功能 - Visual Studio (Windows)](https://learn.microsoft.com/zh-cn/visualstudio/ide/visual-cpp-intellisense?view=vs-2022) 
@@ -437,7 +490,7 @@ CheckOptions:
 ## .clang-format  
 ```yaml  
 --- 
-# 通用规则（适用于C/C++）  
+# 通用规则
 BasedOnStyle: Google  
 # 空格代替 tab  
 UseTab:          Never  
@@ -465,8 +518,8 @@ IndentCaseLabels: true
 
 ---  
 
-Language:        Cpp  
 # C++的独特规则  
+Language:        Cpp  
 Standard:        C++11  
 
 ...
