@@ -47,7 +47,12 @@ Output Window 选择 True，显示 vim 命令输出窗口。
 ##### Edit 命令
 > [Keyboard shortcuts - Visual Studio (Windows)](https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=vs-2022#bkmk_edit-popular-shortcuts) 
 
-  
+# 导入导出
+> [Customizing Development Settings in Visual Studio](https://learn.microsoft.com/zh-cn/previous-versions/zbhkx167(v=vs.140)?f1url=%3FappId%3DDev17IDEF1%26l%3DZH-CN%26k%3Dk(Vs.VsSettings.ExportChooseSettingsPage)%26rd%3Dtrue#to-export-your-settings) 
+
+- 工具 -> 导入和导出设置向导
+- 将当前 vs2022 设置导出，以后导入使用相同的配置
+
 # 代码格式化  
 - clang-format 格式化  
 VS2022 内部集成 clang-format 工具，可以开启使用。且用 clang-format 也可配置 .clang-format 文件后在 vsCode 中使用相同的格式化配置。  
