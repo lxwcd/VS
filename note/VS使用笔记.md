@@ -4,6 +4,13 @@ VS2022 使用笔记
 - win10 vs2022 专业版 17.9.5
 - win11 vs2022 社区版 17.10.2
 
+# C++ 工程环境配置
+- 工作负荷和组件要选对，漏选可能造成工程编译失败
+如果漏装，可以安装完成后修改安装组件，更新组件。
+
+- 编译平台选择正确
+如只支持 win32 但选择了 x64 可能编译出错
+
 # 版本升级
 
 # 重装系统后重新安装
@@ -553,3 +560,14 @@ Standard:        C++11
 ...
 
 ```  
+
+# 类设计器
+> [使用类设计器进行设计、可视化和重构 - Visual Studio (Windows)](https://learn.microsoft.com/zh-cn/visualstudio/ide/class-designer/designing-and-viewing-classes-and-types?view=vs-2022) 
+
+
+# windows C++ 环境配置
+选择 `使用 C++ 的桌面开发` 和 `WinUI 应用程序开发` 两个套件
+
+![](img/2025-05-19-15-06-13.png)
+![](img/2025-05-19-15-06-43.png)
+
